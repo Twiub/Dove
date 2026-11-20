@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Dove</string>
+    <string name="tagline">Verified profiles. Scam detection. Chats stay in the app.</string>
+    <string name="tab_picks">Picks</string>
+    <string name="tab_discover">Discover</string>
+    <string name="tab_nearby">Nearby</string>
+    <string name="tab_messages">Messages</string>
+    <string name="tab_me">Me</string>
+    <string name="safety_scan_notice">Chats are scanned automatically to catch scams and abuse. Never send money. Meet in public.</string>
+    <string name="child_safety_contact">safety@doveapp.example</string>
+    <string name="emergency_ke_police">999</string>
+    <string name="emergency_intl">112</string>
+</resources>

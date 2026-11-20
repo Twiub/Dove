@@ -1,0 +1,6 @@
+{
+  "name": "Dove",
+  "description": "Verified-first dating app with conversational profile building, mutual-fit matching, scam and contact-leak protection, private compatibility, and safe-date tools.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

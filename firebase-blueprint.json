@@ -1,0 +1,284 @@
+{
+  "entities": {
+    "UserAccount": {
+      "title": "UserAccount",
+      "description": "Private account, age verification, consents, capability tier, roses, and safety strike state owned exclusively by the user.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "email": { "type": "string" },
+        "age": { "type": "integer" },
+        "dobYear": { "type": "integer" },
+        "dobMonth": { "type": "integer" },
+        "dobDay": { "type": "integer" },
+        "termsAccepted": { "type": "boolean" },
+        "safetyConsent": { "type": "boolean" },
+        "browseOnly": { "type": "boolean" },
+        "selfieVerified": { "type": "boolean" },
+        "phoneVerified": { "type": "boolean" },
+        "phoneE164": { "type": "string" },
+        "country": { "type": "string" },
+        "locale": { "type": "string" },
+        "whoCanMessageFirst": { "type": "string", "enum": ["verified_inbox", "verified_only", "off"] },
+        "allowRoses": { "type": "boolean" },
+        "standoutsMuted": { "type": "boolean" },
+        "liteMode": { "type": "boolean" },
+        "rosesBalance": { "type": "integer" },
+        "rosesSentWeek": { "type": "integer" },
+        "strikes": { "type": "integer" },
+        "suspensionUntilMs": { "type": "integer" },
+        "suspensionReason": { "type": "string" },
+        "onboardingComplete": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp" }
+      },
+      "required": ["userId", "age", "termsAccepted", "safetyConsent", "browseOnly", "selfieVerified", "country", "locale", "whoCanMessageFirst", "allowRoses", "standoutsMuted", "liteMode", "rosesBalance", "rosesSentWeek", "strikes", "suspensionUntilMs", "onboardingComplete", "createdAt", "updatedAt"]
+    },
+    "PrivatePrefs": {
+      "title": "PrivatePrefs",
+      "description": "Private compatibility preferences strictly isolated to the owner.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "consented": { "type": "boolean" },
+        "consentVersion": { "type": "integer" },
+        "pace": { "type": "string", "enum": ["slow", "gradual", "natural", "open", "skip"] },
+        "paceDealbreaker": { "type": "boolean" },
+        "exclusivity": { "type": "string", "enum": ["exclusive", "open_to_discuss", "non_exclusive", "skip"] },
+        "exclusivityDealbreaker": { "type": "boolean" },
+        "chemWeight": { "type": "string", "enum": ["low", "medium", "high", "skip"] },
+        "discretion": { "type": "string", "enum": ["public", "selective", "private", "skip"] },
+        "flirtLevel": { "type": "string", "enum": ["sweet", "flirty", "bold", "skip"] },
+        "place": { "type": "string", "enum": ["own_place", "shared_place", "no_place", "skip"] },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp" }
+      },
+      "required": ["userId", "consented", "consentVersion", "pace", "paceDealbreaker", "exclusivity", "exclusivityDealbreaker", "chemWeight", "discretion", "flirtLevel", "place", "updatedAt"]
+    },
+    "ProtectedPin": {
+      "title": "ProtectedPin",
+      "description": "Fixed map pin for hiding mutually from nearby people around work/home/campus.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "label": { "type": "string" },
+        "areaName": { "type": "string" },
+        "lat": { "type": "number" },
+        "lng": { "type": "number" },
+        "radiusM": { "type": "integer" },
+        "active": { "type": "boolean" },
+        "pausedUntilMs": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "label", "areaName", "lat", "lng", "radiusM", "active", "pausedUntilMs", "createdAt"]
+    },
+    "SwipeRecord": {
+      "title": "SwipeRecord",
+      "description": "User swipe or like-with-note action.",
+      "type": "object",
+      "properties": {
+        "actorId": { "type": "string" },
+        "targetId": { "type": "string" },
+        "targetName": { "type": "string" },
+        "targetArea": { "type": "string" },
+        "action": { "type": "string", "enum": ["like", "pass", "like_note"] },
+        "note": { "type": "string" },
+        "roseAttached": { "type": "boolean" },
+        "reintroduced": { "type": "boolean" },
+        "ladderUsed": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["actorId", "targetId", "targetName", "action", "roseAttached", "reintroduced", "ladderUsed", "createdAt"]
+    },
+    "BlockRecord": {
+      "title": "BlockRecord",
+      "description": "Blocked user record with 90-day evidence preservation.",
+      "type": "object",
+      "properties": {
+        "blockerId": { "type": "string" },
+        "blockedUid": { "type": "string" },
+        "blockedName": { "type": "string" },
+        "reasonCategory": { "type": "string" },
+        "evidenceSnapshot": { "type": "string" },
+        "evidenceRetainedUntilMs": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["blockerId", "blockedUid", "blockedName", "evidenceRetainedUntilMs", "createdAt"]
+    },
+    "SafeDate": {
+      "title": "SafeDate",
+      "description": "Public safe-date check-in sheet.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "connectionId": { "type": "string" },
+        "partnerName": { "type": "string" },
+        "place": { "type": "string" },
+        "meetAtLabel": { "type": "string" },
+        "trustedContact": { "type": "string" },
+        "status": { "type": "string", "enum": ["scheduled", "checked_ok", "panic"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "connectionId", "partnerName", "place", "meetAtLabel", "trustedContact", "status", "createdAt"]
+    },
+    "PublicProfile": {
+      "title": "PublicProfile",
+      "description": "Non-PII public dating profile visible to signed-in discovery.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "firstName": { "type": "string" },
+        "age": { "type": "integer" },
+        "gender": { "type": "string", "enum": ["woman", "man", "nonbinary", "self_describe"] },
+        "interestedIn": { "type": "array" },
+        "area": { "type": "string" },
+        "lat": { "type": "number" },
+        "lng": { "type": "number" },
+        "lookingFor": { "type": "string", "enum": ["long_term", "long_term_open_to_short", "short_term_open_to_long", "short_term_fun", "new_friends", "still_figuring_out"] },
+        "bio": { "type": "string" },
+        "promptQuestion": { "type": "string" },
+        "promptAnswer": { "type": "string" },
+        "interests": { "type": "array" },
+        "languages": { "type": "array" },
+        "work": { "type": "string" },
+        "selfieVerified": { "type": "boolean" },
+        "trustScore": { "type": "integer" },
+        "prefAgeMin": { "type": "integer" },
+        "prefAgeMax": { "type": "integer" },
+        "distMaxKm": { "type": "integer" },
+        "verifiedOnly": { "type": "boolean" },
+        "showInNearby": { "type": "boolean" },
+        "paused": { "type": "boolean" },
+        "incognito": { "type": "boolean" },
+        "status": { "type": "string", "enum": ["active", "paused"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "firstName", "age", "gender", "interestedIn", "area", "lat", "lng", "lookingFor", "bio", "interests", "languages", "selfieVerified", "trustScore", "prefAgeMin", "prefAgeMax", "distMaxKm", "verifiedOnly", "showInNearby", "paused", "incognito", "status", "createdAt", "updatedAt"]
+    },
+    "MessageRequest": {
+      "title": "MessageRequest",
+      "description": "Single pre-match scanned message request between two users.",
+      "type": "object",
+      "properties": {
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "senderArea": { "type": "string" },
+        "senderVerified": { "type": "boolean" },
+        "receiverId": { "type": "string" },
+        "receiverName": { "type": "string" },
+        "memberUids": { "type": "array" },
+        "body": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "filtered", "held", "blocked", "ignored", "accepted", "expired"] },
+        "roseAttached": { "type": "boolean" },
+        "sensitive": { "type": "boolean" },
+        "effortReasons": { "type": "array" },
+        "riskCategory": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["senderId", "senderName", "senderVerified", "receiverId", "receiverName", "memberUids", "body", "status", "roseAttached", "sensitive", "effortReasons", "createdAt", "updatedAt"]
+    },
+    "Connection": {
+      "title": "Connection",
+      "description": "Mutual match and chat thread between two participants.",
+      "type": "object",
+      "properties": {
+        "memberUids": { "type": "array" },
+        "userAId": { "type": "string" },
+        "userAName": { "type": "string" },
+        "userBId": { "type": "string" },
+        "userBName": { "type": "string" },
+        "userBArea": { "type": "string" },
+        "userBVerified": { "type": "boolean" },
+        "lastMessagePreview": { "type": "string" },
+        "nudgeCount": { "type": "integer" },
+        "nudgeBanner": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "unmatched", "blocked"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["memberUids", "userAId", "userAName", "userBId", "userBName", "userBVerified", "lastMessagePreview", "nudgeCount", "nudgeBanner", "status", "createdAt", "updatedAt"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "Scanned chat message inside a connection thread.",
+      "type": "object",
+      "properties": {
+        "connectionId": { "type": "string" },
+        "memberUids": { "type": "array" },
+        "senderId": { "type": "string" },
+        "body": { "type": "string" },
+        "status": { "type": "string", "enum": ["sent", "held", "blocked", "sensitive"] },
+        "reasonCode": { "type": "string" },
+        "nudgeCategory": { "type": "string" },
+        "roseAttached": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["connectionId", "memberUids", "senderId", "body", "status", "roseAttached", "createdAt"]
+    },
+    "SafetyReport": {
+      "title": "SafetyReport",
+      "description": "User safety report with reporter outcome loop.",
+      "type": "object",
+      "properties": {
+        "reporterId": { "type": "string" },
+        "targetUid": { "type": "string" },
+        "targetName": { "type": "string" },
+        "category": { "type": "string", "enum": ["scam", "harassment", "explicit", "minor", "impersonation", "solicitation", "spam"] },
+        "details": { "type": "string" },
+        "filedAfterBlock": { "type": "boolean" },
+        "bulk": { "type": "boolean" },
+        "evidenceSnippet": { "type": "string" },
+        "outcome": { "type": "string", "enum": ["reviewing", "restricted", "no_violation"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["reporterId", "targetUid", "targetName", "category", "details", "filedAfterBlock", "bulk", "outcome", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserAccount" },
+      "description": "Private user account and safety settings"
+    },
+    "/users/{userId}/privatePrefs/{docId}": {
+      "schema": { "$ref": "#/entities/PrivatePrefs" },
+      "description": "Owner-only private compatibility preferences"
+    },
+    "/users/{userId}/pins/{pinId}": {
+      "schema": { "$ref": "#/entities/ProtectedPin" },
+      "description": "Owner-only protected place pins"
+    },
+    "/users/{userId}/swipes/{targetId}": {
+      "schema": { "$ref": "#/entities/SwipeRecord" },
+      "description": "Owner-only swipe and waiting records"
+    },
+    "/users/{userId}/blocks/{blockedUid}": {
+      "schema": { "$ref": "#/entities/BlockRecord" },
+      "description": "Owner-only blocks with 90-day evidence preservation"
+    },
+    "/users/{userId}/safeDates/{dateId}": {
+      "schema": { "$ref": "#/entities/SafeDate" },
+      "description": "Owner-only safe-date sheets"
+    },
+    "/publicProfiles/{profileId}": {
+      "schema": { "$ref": "#/entities/PublicProfile" },
+      "description": "Public non-PII dating profiles"
+    },
+    "/messageRequests/{requestId}": {
+      "schema": { "$ref": "#/entities/MessageRequest" },
+      "description": "Single pre-match scanned message requests"
+    },
+    "/connections/{connectionId}": {
+      "schema": { "$ref": "#/entities/Connection" },
+      "description": "Mutual matches and threads"
+    },
+    "/connections/{connectionId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/ChatMessage" },
+      "description": "Messages inside a match thread"
+    },
+    "/reports/{reportId}": {
+      "schema": { "$ref": "#/entities/SafetyReport" },
+      "description": "User safety reports"
+    }
+  }
+}
